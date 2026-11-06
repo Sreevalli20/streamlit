@@ -1,0 +1,31 @@
+# Python bytecode and test/lint caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments and local package/build outputs
+.venv/
+venv/
+env/
+build/
+dist/
+*.egg-info/
+*.pyd
+*.so
+
+# Generated Cython and benchmark artifacts
+cython_src/lob.c
+cython_src/lob.html
+benchmark-results/
+bench/results/
+*.prof
+*.rb
+*.tmp
+
+# Local logs and configuration secrets
+logs/
+.env
+.env.*
+!.env.example

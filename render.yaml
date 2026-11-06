@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: chronosmatch
+    env: python
+    plan: free
+    buildCommand: "cd hft_engine && pip install -r requirements.txt"
+    startCommand: "cd hft_engine && python main.py web --host 0.0.0.0 --port $PORT --target-ops 50000"
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: RENDER
+        value: "true"
+    # Render's Python runtime supports 3.9, 3.10, 3.11, 3.12. Python 3.14.6 is not yet available.
+    # The RENDER=true env var allows the app to run with Python 3.12.x on cloud.
+    # The runtime.txt file requests 3.14.6, but Render will fall back to 3.12 if not available.
+    runtime: "3.12"
