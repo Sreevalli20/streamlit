@@ -17,22 +17,22 @@ import argparse
 import os
 import sys
 
-# Python version check - require 3.14.6 for local, allow 3.12.x for cloud deployment
-REQUIRED_PYTHON_VERSION = (3, 14, 6)
+# Python version check - require 3.14.x for local, allow 3.12.x or 3.14.x for cloud deployment
+MIN_PYTHON_VERSION = (3, 14, 0)
 
-# Allow running on Render/other cloud platforms with 3.12.x
+# Allow running on Render/other cloud platforms with 3.12.x or 3.14.x
 is_cloud_deployment = os.getenv("RENDER") == "true" or os.getenv("CLOUD_DEPLOYMENT") == "true"
 
 if is_cloud_deployment:
-    # Cloud deployment - allow 3.12.x
-    if sys.version_info[:2] != (3, 12):
-        print(f"WARNING: Cloud deployment detected. ChronosMatch is tested on Python 3.14.6")
+    # Cloud deployment - allow 3.12.x or 3.14.x
+    if sys.version_info[:2] not in [(3, 12), (3, 14)]:
+        print(f"WARNING: Cloud deployment detected. ChronosMatch is tested on Python 3.14.x")
         print(f"Current version: {sys.version}")
         print("Proceeding with available version, but behavior may differ.")
 else:
-    # Local deployment - strict version check
-    if sys.version_info[:3] != REQUIRED_PYTHON_VERSION:
-        print(f"ERROR: ChronosMatch requires Python {REQUIRED_PYTHON_VERSION[0]}.{REQUIRED_PYTHON_VERSION[1]}.{REQUIRED_PYTHON_VERSION[2]}")
+    # Local deployment - require 3.14.x
+    if sys.version_info[:3] < MIN_PYTHON_VERSION:
+        print(f"ERROR: ChronosMatch requires Python 3.14.x or higher")
         print(f"Current version: {sys.version}")
         print("Please install the required Python version or use a virtual environment with it.")
         print("For cloud deployment, set RENDER=true or CLOUD_DEPLOYMENT=true environment variable.")
